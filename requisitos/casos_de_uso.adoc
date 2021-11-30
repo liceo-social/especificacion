@@ -1,0 +1,255 @@
+=== Casos de uso
+
+A continuacion, se presenta el diagrama de casos de uso del sistema. Este diagrama reconoce dos tipos de actores: usuarios administradores y usuarios normales. Un administrador puede realizar cualquier accion mientras que los usuarios normales solo pueden realizar un subconjunto las mismas. Para que haya mas claridad a la hora de visualizar los casos de uso, los hemos dividido en **Usuarios**, **Personas**, **Agrupaciones** y **Proyectos**.
+
+==== Usuarios
+
+Los usuarios son los actores de esta aplicacion. El mantenimiento de los registros de usuarios se hara por parte de un administrador. Los usuarios podran ver datos basicos de otros usuarios y listar a los usuarios del sistema.
+
+[plantuml]
+....
+@startuml
+left to right direction
+actor "Administrator" as admin
+actor "User" as user
+
+user <|-- admin
+
+package social.liceo.controller.user {    
+    user -- (ShowBasicDetails)
+    user -- (ListUsers)
+    admin -- (RegisterUser)
+    admin -- (UnregisterUser)
+    admin -- (EditUserDetails)
+}
+@enduml
+....
+
+
+==== Personas
+
+A continuacion se muestran los casos de uso relativos a la gestion de personas por parte del sistema. En general la mayoria de acciones relativas a la gestion de personas por parte del sistema se podran realizar por usuarios no administradores. Solo algunas acciones sensibles deben ser realizadas por administradores.
+
+===== Registro
+
+[plantuml,width="60%", align="center"]
+....
+@startuml
+left to right direction
+actor "User" as user
+
+package social.liceo.controller.person {
+    user -- (ShowPersonDetails)
+    user -- (RegisterPerson)
+    user -- (EditPersonDetails)    
+    user -- (CreatePersonAlert)
+    user -- (DeletePersonAlert)
+
+    (RegisterPerson) .down.> (ShowPersonDetails) : <<include>>
+    (EditPersonDetails) .down.> (ShowPersonDetails) : <<include>>    
+    (CreatePersonAlert) .down.> (ShowPersonDetails) : <<include>>
+    (DeletePersonAlert) .down.> (ShowPersonDetails) : <<include>>
+    
+}
+@enduml
+....
+
+===== Activacion/Desactivacion
+
+[plantuml,width="80%", align="center"]
+....
+@startuml
+left to right direction
+actor "Administrator" as admin
+actor "User" as user
+user <|-- admin
+
+package social.liceo.controller.person {
+    admin -- (DeactivatePerson)
+    admin -- (ListPersonDeactivationRequests)
+    admin -- (ApprovePersonDeactivationRequest)
+    admin -- (CancelPersonDeactivationRequest)
+    user -- (CreatePersonDeactivationRequest)
+
+    (CreatePersonDeactivationRequest) .down.> (ShowPersonDetails) : <<include>>
+    (CancelPersonDeactivationRequest) .down.> (ListPersonDeactivationRequests): <<include>>
+    (ApprovePersonDeactivationRequest) .down.> (ListPersonDeactivationRequests): <<include>>
+}
+....
+
+
+===== Procesos
+
+[plantuml,width="60%", align="center"]
+....
+@startuml
+left to right direction
+actor "User" as user
+
+package social.liceo.controller.person {
+    user -- (CreatePersonProcess)
+    user -- (EditPersonProcess)
+    user -- (UpdatePersonProcess)
+    user -- (ShowPersonProcessDetails)
+    user -- (ShowPersonProcesses)
+
+    (CreatePersonProcess) .down.> (ShowPersonProcessDetails) : <<include>>
+    (UpdatePersonProcess) .down.> (ShowPersonProcessDetails) : <<include>>
+}
+
+@enduml
+....
+
+===== Alertas
+
+[plantuml,width="60%", align="center"]
+....
+@startuml
+left to right direction
+actor "User" as user
+actor "Admin" as admin
+user <|-up- admin
+
+
+package social.liceo.controller.person {
+    user -right-> (AddAlertToPerson)
+    user -- (RemoveAlertFromPerson)
+    user -- (UpdateAlert)
+    user -- (ResolveAlert)
+}
+@enduml
+....
+
+
+Existen tambien una serie de casos de uso para mantener datos auxiliares utilizados en la gestion de personas como: 
+
+- **DocumentType**: Tipo de documento legal aportado por una persona
+- **ProcessType**: Tipo de proceso sobre una persona
+- **AccessType**: Como una persona ha accedido a la asociacion que esta gestionando su informacion
+
+Estos datos van a ser **mantenidos por un administrador** y **consumidos por los usuarios** del sistema.
+
+[cols="^2a,^2a"]
+|===
+|[plantuml]
+....
+@startuml
+left to right direction
+actor "Administrator" as admin
+user <\|-- admin
+
+package social.liceo.controller.person {
+    admin -- (CreateDocumentType)
+    admin -- (DeleteDocumentType)
+    admin -- (EditDocumentType)
+    admin -- (ShowDocumentType)
+
+    user -- (ListDocumentType)
+}
+@enduml
+....
+
+|[plantuml]
+....
+@startuml
+left to right direction
+actor "Administrator" as admin
+user <\|-- admin
+
+package social.liceo.controller.person {
+    admin -- (CreateProcessType)
+    admin -- (DeleteProcessType)
+    admin -- (EditProcessType)
+    admin -- (ShowProcessType)
+    user -- (ListProcessType)
+}
+@enduml
+....
+
+|[plantuml]
+....
+@startuml
+left to right direction
+actor "Administrator" as admin
+user <\|-- admin
+
+package social.liceo.controller.person {
+    admin -- (CreateAccessType)
+    admin -- (DeleteAccessType)
+    admin -- (EditAccessType)
+    admin -- (ShowAccessType)
+    user -- (ListAccessType)
+}
+@enduml
+....
+|
+|===
+
+Por ultimo, hay una serie de datos que seran utilizados como datos maestros por el resto del sistema. Estos datos no requieren mantenimiento y seran cargados en el sistema para que esten disponibles como consulta. Estos datos son:
+
+- paises
+- orientacion sexual
+- genero
+
+[plantuml]
+....
+@startuml
+left to right direction
+actor "User" as user
+
+package social.liceo.controller.person {
+    user -- (ListCountries)
+    user -- (ShowCountryDetails)
+    user -- (ListSexOrientationChoices)
+    user -- (ShowSexOrientationDetails)
+    user -- (ListGenres)
+    user -- (ShowGenreDetails)
+}
+....
+
+==== Agrupaciones
+
+Ver definicion de <<Grupo>>
+
+[plantuml]
+....
+@startuml
+left to right direction
+actor "Administrator" as admin
+user <|-- admin
+
+package social.liceo.controller.group {
+    admin -- (CreateGroup)
+    admin -- (DeleteGroup)
+    admin -- (EditGroupDetails)
+
+    user -- (ListGroupMembers)
+    user -- (RegisterGroupMember)
+    user -- (UnregisterGroupMember)
+}
+@enduml
+....
+
+==== Proyectos
+
+Ver definicion de <<Proyecto>>
+
+[plantuml]
+....
+@startuml
+left to right direction
+actor "Administrator" as admin
+user <|-- admin
+
+package social.liceo.controller.project {
+    admin -- (CreateProject)
+    admin -- (DeleteProject)
+    admin -- (EditProjectDetails)
+
+    user -- (ListProjectMembers)
+    user -- (RegisterProjectMember)
+    user -- (UnregisterProjectMember)
+}
+@enduml
+....
+

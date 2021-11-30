@@ -1,0 +1,72 @@
+=== Modelo de dominio
+
+[plantuml, format=svg]
+.Esquema
+....
+@startuml
+class User
+
+enum Role {
+    WORKER
+    AUDITOR
+    ADMIN
+}
+
+User *--> Role
+
+class Person
+class PersonalDetails
+class Genre
+class SexOrientation
+class Country
+
+PersonalDetails --> Genre
+PersonalDetails --> SexOrientation
+PersonalDetails --> Country
+
+class ContactInformation
+class LegalInformation
+
+LegalInformation *--> DocumentType
+
+class DocumentType
+class HealthInformation
+class WorkExperience
+class SocialServices
+class DeactivationInfo
+class DeactivationRequest
+
+Person "1" *--> "1" PersonalDetails
+Person "1" *--> "1" ContactInformation
+Person "1" *--> "1" LegalInformation
+Person "1" *--> "1" HealthInformation
+Person "1" *--> "1" WorkExperience
+Person "1" *--> "1" SocialServices
+Person "1" ..> "1" DeactivationInfo
+Person "1" *..> "1" DeactivationRequest
+
+Person "1" o--> "*" Process
+
+class Project
+class ProjectMember
+
+Project "1" o--> "*" ProjectMember
+ProjectMember *--> User
+ProjectMember *--> Person
+
+class Group
+class GroupMember
+
+Group "1" o--> "*" GroupMember
+Group "1" o--> "0.1" Group
+
+GroupMember *--> Person
+GroupMember *--> User
+
+class Process
+class ProcessType
+
+Process "1" *--> "1" ProcessType
+Process "1" ..> "0..1" Project
+@enduml
+....

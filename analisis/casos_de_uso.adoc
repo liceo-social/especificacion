@@ -1,0 +1,93 @@
+=== Analisis Casos de uso
+
+==== Personas
+===== RegisterPerson
+
+[plantuml, align=center]
+....
+@startuml
+actor actor
+agent "MainLayoutView" as MainLayoutView
+agent "RegisterPersonView" as RegisterPersonView
+agent "EditPersonView" as EditPersonView
+
+agent "RegisterPersonController" as RegisterPersonController #d5b1ab
+agent "UsersController" as UsersController #d5b1ab
+agent "AccessTypeController" as AccessTypeController #d5b1ab
+agent "SexTypeController" as SexTypeController #d5b1ab
+agent "GenreTypeController" as GenreTypeController #d5b1ab
+
+agent "OpenUsersView" as OpenUsers
+agent "OpenAccessTypesView" as OpenAccessTypes
+agent "OpenSexTypesView" as OpenSexTypes
+agent "OpenGenreTypesView" as OpenGenreTypes
+
+agent "Person" as Person #e6bc16
+agent "PersonalDetails" as PersonalDetails #e6bc16
+agent "Contact" as Contact #e6bc16
+agent "PersonDAO" as PersonDAO #e6bc16
+
+
+actor -right-> MainLayoutView: createNewPersonView()
+MainLayoutView -right-> RegisterPersonView: createNewPerson()
+
+RegisterPersonView -down-> OpenUsers: "listUsers()"
+RegisterPersonView -down-> OpenAccessTypes: "listAccessTypes()"
+RegisterPersonView -down-> OpenGenreTypes: "listGenreTypes()"
+RegisterPersonView -down-> OpenSexTypes: "listSexTypes()"
+
+RegisterPersonView -right-> RegisterPersonController: createPerson(mandatoryFields)
+OpenUsers -down-> UsersController: listUsers()
+OpenAccessTypes -down-> AccessTypeController: listAccessTypes()
+OpenSexTypes -down-> SexTypeController: listSexTypes()
+OpenGenreTypes -down-> GenreTypeController: listGenreTypes()
+
+RegisterPersonView -up-> EditPersonView: showPersonDetail(personId)
+
+RegisterPersonController -down. Person
+RegisterPersonController *-right-> PersonDAO: createPerson(person)
+
+Person *-left-> "1" PersonalDetails
+Person *-right-> "1" Contact
+
+note left of RegisterPersonView
+ setName(text)
+ setFirstSurname(text)
+ setBirthDate(date)
+ setRegistrationDate(date)
+ setQuickContact(text)
+ setSexOption(sex)
+ setGenreOption(genre)
+ setProfessionalReference(user)
+ setAccessType(accessType)
+end note
+@enduml
+....
+
+===== DeactivatePerson
+
+TODO
+
+===== ActivatePerson
+
+TODO
+
+===== CreatePersonDeactivationRequest
+
+TODO
+
+===== ListPersonDeactivationRequest
+
+TODO
+
+===== CancelPersonDeactivationRequest
+
+TODO
+
+===== ApprovePersonDeactivationRequest
+
+TODO
+
+===== AddPersonAlert
+
+TODO

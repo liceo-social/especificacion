@@ -1,0 +1,51 @@
+=== Glosario
+
+==== Persona
+
+Una persona representa a una de las personas que la asociación, a través de los trabajadores sociales, intenta ayudar por estar pasando por una situación de vulnerabilidad. Cuando se quiere dar de alta a una persona en el sistema, se tiene que hacer dentro de una asociación, por parte de un trabajador social.
+
+**Caracteristicas**
+
+- Cuando se da de alta una persona en una asociación, si no se indica otra cosa, se establecerá como responsable, el trabajador que la dio de alta. 
+- Opcionalmente, durante el proceso de alta, se puede indicar a otro trabajador como responsable de esa persona.
+- Opcionalmente, durante el proceso de alta, se puede indicar a qué grupo/s pertenece esta persona.
+
+==== Usuario
+
+Un usuario solo puede darse de alta a través del administrador de la asociación. n
+
+**Caracteristicas**
+
+- Puede ser el responsable de un grupo/s determinado
+- Puede ser el responsable de un proyecto/s determinados
+- Un trabajador tiene personas a su cargo
+- Un trabajador-administrador puede dar de alta a otros trabajadores
+- Un trabajador puede gestionar grupos, proyectos, procesos, y ficheros
+
+==== Grupo
+
+El grupo es una agrupación lógica de personas por un interés común o las características que las identifican. El interés que lo genera normalmente es atemporal (familia, infancia, laboral...etc).
+
+**Caracteristicas**
+
+- Un grupo es creado por un trabajador
+- Un grupo puede tener personas asociadas que previamente formen parte de la asociación
+
+==== Proyecto
+
+Mientras que un grupo representa una serie de intereses comunes o características comunes de las personas que lo componen, un proyecto representa una serie de actividades para unas personas en un periodo de tiempo determinado. Ejemplos:
+
+- __proyecto “Juventud 2022”, o “Juventud Q1 2022”__
+- ___“Escolarización 2022”, o “Campamento infantil verano 2022”___
+
+**Caracteristicas**
+
+- Un proyecto se crea dentro de un grupo
+- Un proyecto es creado por un trabajador
+- Un proyecto contiene personas de un grupo determinado
+- Un proyecto puede tener una serie de procesos
+- Un proyecto puede tener asociados una serie de ficheros (solicitudes a un museo, permisos a alguna administración…)
+
+==== Procesos
+
+Los procesos son intervenciones puntuales dentro que se pueden realizar individualmente sobre una persona o de manera colectiva. Se caracterizan porque pueden tener una duración determinada. Este tipo de mediciones son muy importantes en las asociaciones para poder evaluar el esfuerzo que se realiza.

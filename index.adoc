@@ -1,0 +1,57 @@
+= Liceo
+Mario Garcia
+v1.0, 2021-11-01
+:doctype: book
+:producer: Asciidoctor
+:keywords: Asciidoctor, samples, e-book, EPUB3, KF8, MOBI, Asciidoctor.js
+:copyright: Apache 2.0
+:imagesdir: images
+:toc: left
+:toclevels: 3
+:toc-title: Indice
+:sectnums:
+
+== Introduccion
+
+include::intro/que_es_liceo.adoc[]
+
+== Requisitos
+
+include::requisitos/glosario.adoc[]
+
+include::requisitos/modelo_de_dominio.adoc[]
+
+include::requisitos/casos_de_uso.adoc[]
+
+include::requisitos/contexto.adoc[]
+
+include::requisitos/especificacion_casos_de_uso.adoc[]
+
+include::requisitos/prototipo_ui.adoc[]
+
+== Analisis 
+
+include::analisis/arquitectura.adoc[]
+
+include::analisis/casos_de_uso.adoc[]
+
+== Diseño
+ 
+- Hardware
+- Componentes
+- Paquetes (con tecnologias)
+- Componentes con paquetes (que paquetes reune cada componente) devops se le caen las lagrimas
+- Diagrama de 1 caso de uso (relacionando tecnologia con el diagrama de analisis)
+- Diagrama de secuencia de 1 caso de uso
+
+== Implementacion
+
+TODO
+
+== Pruebas
+
+TODO
+
+== Referencias
+
+include::referencias/documentacion.adoc[]

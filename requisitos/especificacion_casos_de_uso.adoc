@@ -1,0 +1,300 @@
+=== Especificacion de casos de uso
+
+==== Personas
+===== RegisterPerson
+
+* **Actores**
+** Usuario
+** Administrador
+* **Precondiciones**
+** Estar logado
+* **Diagrama**
+
+[plantuml, align=center]
+....
+@startuml
+hide empty description
+state "ANYWHERE" as anywhere #aliceblue;text:blue;line:aliceblue;
+
+state validation_check <<choice>>
+state "Fields Requested" as basic_fields
+state "Validation Failed" as error
+state "Person Registered" as registered
+state "Registration Triggered" as initial
+state "Data Validated" as data_validated
+
+[*] -down-> anywhere: Desde __cualquier vista__
+anywhere -down-> initial: El **USUARIO** solicita\nregistrar una nueva persona
+initial -down-> basic_fields: El **SISTEMA** exige\ndatos obligatorios
+basic_fields -down-> validation_check: El **USUARIO** introduce\nlos datos
+validation_check -left[#f78b8b,dashed]-> error: Datos incorrectos
+error -up[#f78b8b,dashed]-> basic_fields: El **SISTEMA** muestra\nmensaje de error
+validation_check -down[#green,dashed]-> data_validated: Los datos introducidos\nson correctos
+data_validated -down-> registered: El **SISTEMA** registra a la persona
+registered -down-> [*]
+
+note right of basic_fields
+    name
+    first surname
+    sex
+    genre
+    birthdate
+    registration date
+    contact
+    reference user
+    access type
+end note
+@enduml
+....
+
+===== DeactivatePerson
+
+* **Actores**
+** Administrador
+* **Precondiciones**
+** Estar logado
+* **Diagrama**
+
+[plantuml, align=center]
+....
+hide empty description
+state "PERSON DETAILS VIEW" as person_details_view #aliceblue;text:blue;line:aliceblue;
+
+state cond_motivation <<choice>>
+state cond_date <<choice>>
+
+state "Motivation Requested" as motivation_requested
+state "Motivation Missing" as motivation_missing
+state "Date Requested" as date_requested
+state "Person Deactivated" as person_deactivated
+state "Deactivation Triggered" as initial
+state "Data Validated" as data_validated
+
+[*] -down-> person_details_view: Desde __detalle de una persona__
+person_details_view -down-> initial: El **ADMINISTRADOR** solicita desactivar\n el registro de una persona
+initial -down-> motivation_requested: El **SISTEMA** solicita una motivacion\npara la desactivacion
+motivation_requested -down-> cond_motivation: El **ADMINISTRADOR** introduce una motivacion
+cond_motivation -right[#f78b8b,dashed]-> motivation_missing: motivacion ausente
+motivation_missing -up[#f78b8b,dashed]-> motivation_requested: El **SISTEMA** muestra un\nmensaje de error
+cond_motivation -down[#green,dashed]-> date_requested: El **SISTEMA** solicita una fecha\npara la desactivacion
+date_requested -down-> cond_date: El **ADMINISTRADOR** introduce una fecha
+cond_date -down-> data_validated
+cond_date -down-> data_validated
+data_validated -down-> person_deactivated: El **SISTEMA** desactiva el registro\nde la persona
+person_deactivated -down-> [*]
+
+note left of cond_date
+  El usuario introduce una fecha
+  y el sistema usa esa fecha
+end note
+
+note right of cond_date
+  El usuario no introduce una fecha
+  y el sistema usa la fecha del 
+  sistema
+end note
+....
+
+===== ActivatePerson
+
+* **Actores**
+** Administrador
+* **Precondiciones**
+** Estar logado
+** Que el registro a activar este previamente desactivado
+* **Diagrama**
+
+[plantuml, align=center]
+....
+hide empty description
+state "PERSON DETAILS VIEW" as person_detail #aliceblue;text:blue;line:aliceblue;
+
+state "Person Activated" as person_activated:
+state "Activation Triggered" as initial
+state "Configuration Requested" as confirmation_requested
+state confirmation_check <<choice>>
+
+[*] -down-> person_detail: Desde __detalle de una persona__
+person_detail -down-> initial: El **ADMINISTRADOR** solicita reactivar\nel registro desactivado de una persona
+initial -down-> confirmation_requested: El **SISTEMA** solicita confirmacion por parte del **ADMINISTRADOR**
+confirmation_requested -down-> confirmation_check
+confirmation_check -left-> person_activated: El **SISTEMA** reactiva el registro de la persona
+confirmation_check -down-> [*]
+person_activated -down-> [*]
+....
+
+===== CreatePersonDeactivationRequest
+
+* **Actores**
+** User
+* **Precondiciones**
+** Estar logado
+* **Diagrama**
+
+[plantuml, align=center]
+....
+hide empty description
+state "PERSON DETAILS VIEW" as person_details_view #aliceblue;text:blue;line:aliceblue;
+
+state cond_date <<choice>>
+state cond_motivation <<choice>>
+state "Validation Failed" as error
+state "Motivation Requested" as motivation
+state "Date Requested" as date
+state "Request Registered" as solicitud
+state "Deactivation Triggered" as initial
+
+[*] -down-> person_details_view: Desde __detalle de una persona__
+person_details_view -down-> initial: El **USUARIO** solicita dar de baja a una persona
+initial -down-> motivation: El **SISTEMA** solicita una motivacion de la baja al usuario
+motivation -down-> cond_motivation
+cond_motivation -right[#f78b8b,dashed]-> error: motivacion ausente
+error -up[#f78b8b,dashed]-> motivation: El **SISTEMA** muestra un\nmensaje de error
+cond_motivation -down[#green,dashed]-> date: El **SISTEMA** solicita una fecha\npara la baja
+date -down-> cond_date: El **USUARIO** introduce una fecha
+cond_date -down-> data_validated
+cond_date -down-> data_validated
+data_validated -down-> solicitud: El **SISTEMA** registra la solicitud de baja
+solicitud -down-> [*]
+
+
+note left of cond_motivation
+  El **USUARIO** introduce una motivacion
+end note
+
+note left of cond_date
+  El usuario introduce una fecha
+  y el sistema usa esa fecha
+end note
+
+note right of cond_date
+  El usuario no introduce una fecha
+  y el sistema usa la fecha del 
+  sistema
+end note
+....
+
+===== ListPersonDeactivationRequests
+
+* **Actores**
+** Administrador
+* **Precondiciones**
+** Estar logado
+* **Diagrama**
+
+[plantuml, align=center]
+....
+@startuml
+hide empty description
+state "ADMIN MENU" as admin_menu #aliceblue;text:blue;line:aliceblue;
+state "Deactivation Requests Listed" as listed
+state "List Requested" as initial
+
+[*] -down-> admin_menu: Desde __el menu del administrador__
+admin_menu -down-> initial: El **ADMINISTRADOR** solicita\nun listado de las\nsolicitudes de desactivacion
+initial -down-> listed: El **SISTEMA** muestra un listado de las\nsolicitudes de desactivacion
+listed -down-> [*]
+@enduml
+....
+
+===== CancelPersonDeactivationRequest
+
+* **Actores**
+** Administrador
+* **Precondiciones**
+** Estar logado
+* **Diagrama**
+
+===== ConfirmPersonDeactivationRequest
+     
+* **Actores**
+** Administrador
+* **Precondiciones**
+** Estar logado
+* **Diagrama**
+
+===== CreatePersonProcess
+
+* **Actores**
+** Usuario
+* **Precondiciones**
+** Estar logado
+** Que la persona este incluida en algun proyecto
+* **Diagrama**
+
+[plantuml, align=center]
+....
+@startuml
+hide empty description
+state "PERSON PROCESSES" as person_processes #aliceblue;text:blue;line:aliceblue;
+state "PROCESS REQUESTED" as new_process_request
+state "OPTIONS SHOWN" as options_shown
+state "MANDATORY FIELDS REQUIRED" as system_requires_fields
+state "PROCESS CREATED" as process_created
+state "VALIDATION FAILED" as validation_failed
+state validation <<choice>>
+
+[*] -down-> person_processes: Desde __el listado de procesos__ de una persona
+person_processes -down-> new_process_request: El **USUARIO** solicita crear un nuevo proceso para la persona
+new_process_request -down-> options_shown: El **SISTEMA** muestra una serie de datos\nque puede usar el usuario\npara crear el proceso
+options_shown -down-> system_requires_fields: El sistema solicita al menos una serie de campos
+system_requires_fields -down-> validation
+validation -down[#green,dashed]-> process_created: El sistema crea el nuevo proceso
+validation -right[dashed]-> validation_failed: Hay campos incorrectos
+validation_failed -up[dashed]-> system_requires_fields: El sistema muestra los errores de validacion
+process_created -down-> [*]
+
+
+note left of validation
+  El usuario introduce los datos requeridos
+end note
+
+note left of system_requires_fields
+  proyecto
+  tipo de proceso
+  descripcion
+  contenido
+  usuario que lo ha creado
+end note
+....
+
+===== AddAlertToPerson
+
+* **Actores**
+** Usuario
+* **Precondiciones**
+** Estar logado
+* **Diagrama**
+
+[plantuml, align=center]
+....
+@startuml
+hide empty description
+
+state "PERSON AREA" as person_area #aliceblue;text:blue;line:aliceblue;
+state "ALERT CREATION REQUESTED" as alert_creation_requested
+state "DATA REQUESTED" AS mandatory_data_requested
+state "VALIDATION FAILED" AS validation_failed
+state "SEVERITY OPTIONS" as severity_ops
+state "ALERT CREATED" as alert_created
+
+state validation <<choice>>
+
+[*] -down-> person_area: Desde el __area de una persona__
+person_area -down-> alert_creation_requested: El **USUARIO** solicita agregar una alerta a una persona
+alert_creation_requested -down-> severity_ops: El **SISTEMA** muestra los tipos de importancia (severity)
+severity_ops -down-> mandatory_data_requested: El **SISTEMA** solicita los datos minimos
+mandatory_data_requested -down-> validation
+validation -down[#green,dashed]-> alert_created: El **SISTEMA** crea la nueva alerta y la agrega a la persona
+validation -right[dashed]-> validation_failed: hay campos incorrectos
+validation_failed -up[dashed]-> mandatory_data_requested: El **SISTEMA** muestra los errores
+alert_created -down-> [*]
+
+note left of mandatory_data_requested
+  descripcion
+  severity
+  usuario que lo ha creado
+end note
+
+@enduml
+....

@@ -1,0 +1,9 @@
+=== Que es Liceo ?
+
+El liceo, https://es.wikipedia.org/wiki/Liceo_(instituci%C3%B3n)[según la Wikipedia], era uno de los tres gimnasios de Atenas, un espacio dedicado al ejercicio físico y la discusión filosófica, la reflexión y el estudio. Era el centro de enseñanza donde Aristóteles impartía cátedra. Bajo esa filosofía de espacio de reflexión y estudio la aplicación Liceo pretende ser una herramienta que facilite la tarea de gestión de la información de las personas participantes a la que se enfrentan profesionales de la intervención social y comunitaria (trabajo social, educación social, integración social, animación sociocultural...) en el desarrollo de sus proyectos.
+
+Liceo surge como un proyecto colaborado entre varias personas en la https://piweek.com/[PIWEEK] de https://kaleidos.net/[Kaleidos] en diciembre de 2019. Han estado involucradas en ella personas de la propia Kaleidos, de la Asociación Aventura 2000 y de la Asociación MASI.
+
+Liceo es una aplicación destinada a ser instalada en un servidor y acceder a ella a través de cualquier navegador. Su interfaz es muy sencilla y permite poder comenzar a utilizarla en pocos minutos con unas simples nociones básicas que podrás encontrar en esta documentación.
+
+En el germen desarrollo de Liceo han estado involucradas entidades de pequeño tamaño, sin embargo la aplicación está pensada para, desde la generalidad, facilitar tareas de gestión de información social a entidades de cualquier tamaño y para permitir incorporar procesos de calidad en su acción profesional.

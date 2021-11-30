@@ -1,0 +1,27 @@
+=== Prototipo interfaz
+
+==== Personas
+===== RegisterPerson
+
+[.text-center]
+image:RegisterPerson.png[width="80%"]
+
+===== CreatePersonDeactivationRequest
+
+[.text-center]
+image:CreatePersonDeactivationRequest.png[width="80%"]
+
+===== DeactivatePerson
+
+[.text-center]
+image:DeactivatePerson.png[width="80%"]
+
+===== ActivatePerson
+
+[.text-center]
+image:ActivatePerson.png[width="80%"]
+
+===== ListPersonDeactivationRequests
+
+[.text-center]
+image:ListPersonDeactivationRequests.png[width="80%"]
