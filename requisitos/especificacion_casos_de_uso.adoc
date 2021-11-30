@@ -336,3 +336,62 @@ end note
 
 @enduml
 ....
+
+===== UpdateAlert
+
+* **Actores**
+** Usuario , Admin
+* **Precondiciones**
+** Estar logado
+** Solo el mismo usuario que creo la alerta o el admin pueden actualizar
+* **Diagrama**
+
+[plantuml, align=center]
+....
+@startuml
+hide empty description
+
+state "ALERT AREA" as from_alert_area #aliceblue;text:blue;line:aliceblue;
+state "UPDATE REQUESTED" as alert_update_request
+state "USER NOT VALID" as user_not_valid
+state "ALERT UPDATED" as alert_updated
+state "VALIDATION FAILED" as params_not_valid
+
+state is_valid_user_validation <<choice>>
+state updated_params_validation <<choice>>
+
+[*] -down-> from_alert_area
+from_alert_area -down-> alert_update_request: El **USUARIO** solicita los datos de una alerta
+alert_update_request -down-> is_valid_user_validation: El **SISTEMA** comprueba que el usuario tiene permiso para actualizar
+is_valid_user_validation -right[dashed]-> user_not_valid: El usuario no es admin ni el mismo que creo la alerta
+is_valid_user_validation -down-> updated_params_validation: El **SISTEMA** comprueba que los datos a actualizar son validos
+updated_params_validation -down[#green,dashed]-> alert_updated
+updated_params_validation -left[dashed]-> params_not_valid
+params_not_valid -up[dashed]-> updated_params_validation
+user_not_valid -up[dashed]-> from_alert_area: El **SISTEMA** muestra el error de __autorizacion__
+alert_updated -down-> [*]
+
+note right of updated_params_validation  
+  id de la alerta
+  texto de la alerta
+end note
+
+@enduml
+....
+
+
+===== ResolveAlert
+
+* **Actores**
+** Usuario , Admin
+* **Precondiciones**
+** Estar logado
+* **Diagrama**
+
+[plantuml, align=center]
+....
+@startuml
+hide empty description
+
+@enduml
+....
