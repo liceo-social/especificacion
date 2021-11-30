@@ -298,3 +298,41 @@ end note
 
 @enduml
 ....
+
+===== RemoveAlertFromPerson
+
+* **Actores**
+** Usuario, Admin
+* **Precondiciones**
+** Estar logado
+* **Diagrama**
+
+[plantuml, align=center]
+....
+@startuml
+hide empty description
+
+state "PERSON AREA" as person_area #aliceblue;text:blue;line:aliceblue;
+state "ALERT REMOVAL REQUESTED" as alert_removal_requested
+state "PARAMS REQUESTED" as mandatory_params_required
+state "ALERT REMOVED" as alert_removed
+state "VALIDATION FAILED" as validation_failed
+state validation <<choice>>
+
+[*] -down-> person_area 
+person_area -down-> alert_removal_requested: El **USUARIO** solicita eliminar una alerta de un usuario
+alert_removal_requested -down-> mandatory_params_required: El **SISTEMA** solicita identificadores
+mandatory_params_required -down-> validation
+validation -down[#green,dashed]-> alert_removed
+validation -right[dashed]-> validation_failed: parametros incorrectos
+validation_failed -up[dashed]-> mandatory_params_required: el **SISTEMA** muestra los errores
+alert_removed -down-> [*]
+
+note left of mandatory_params_required
+  id de la persona
+  id de la alerta
+  usuario que lo elimina
+end note
+
+@enduml
+....

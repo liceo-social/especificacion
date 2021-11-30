@@ -25,3 +25,9 @@ image:ActivatePerson.png[width="80%"]
 
 [.text-center]
 image:ListPersonDeactivationRequests.png[width="80%"]
+
+==== Agrupaciones
+===== AddPersonToGroup
+
+[.text-center]
+image:AddPersonToGroup.png[width="80%"]
